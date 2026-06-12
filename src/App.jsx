@@ -17,7 +17,6 @@ import {
   Info,
   Instagram,
   Layers,
-  Leaf,
   Loader,
   Lock,
   MapPin,
@@ -41,6 +40,18 @@ const initialForm = {
 }
 
 const mediaImages = Array.from({ length: 21 }, (_, i) => `/media/job-${String(i + 1).padStart(2, '0')}.jpg`)
+const mediaPanelClass = 'relative w-full aspect-video md:aspect-auto md:w-[668px] md:h-[683px] md:max-w-full md:mt-10 lg:mt-14 md:justify-self-end overflow-hidden bg-gray-100'
+const aboutMediaPanelClass = 'reveal active relative w-full aspect-video md:aspect-auto md:w-[668px] md:h-[506px] md:max-w-full md:mt-0 md:justify-self-end overflow-hidden bg-gray-100'
+const showcaseMedia = [
+  ...Array.from({ length: 16 }, (_, i) => ({
+    type: 'image',
+    src: `/showcase/showcase-${String(i + 1).padStart(2, '0')}.jpeg`,
+  })),
+  ...Array.from({ length: 6 }, (_, i) => ({
+    type: 'video',
+    src: `/showcase/showcase-video-${String(i + 1).padStart(2, '0')}.mp4`,
+  })),
+]
 const taglineText = 'We clean, You relax.'
 
 const services = [
@@ -149,6 +160,7 @@ function App() {
   const [successDetails, setSuccessDetails] = useState(null)
   const [submitState, setSubmitState] = useState('idle')
   const [activeMediaIndex, setActiveMediaIndex] = useState(0)
+  const [activeShowcaseIndex, setActiveShowcaseIndex] = useState(0)
   const [isMediaOpen, setIsMediaOpen] = useState(false)
   const [mapSrc, setMapSrc] = useState(defaultMapSrc)
   const hideSuccessTimer = useRef(null)
@@ -221,6 +233,14 @@ function App() {
 
     return () => window.clearInterval(intervalId)
   }, [isMediaOpen])
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      setActiveShowcaseIndex((prev) => (prev + 1) % showcaseMedia.length)
+    }, 2800)
+
+    return () => window.clearInterval(intervalId)
+  }, [])
 
   const scrollTo = (selector) => {
     if (selector === '#') {
@@ -434,7 +454,7 @@ function App() {
               </div>
             </div>
 
-            <div className="relative w-full aspect-video md:aspect-auto md:h-[72vh] md:min-h-[560px] md:max-h-[760px] md:mt-10 lg:mt-14 md:justify-self-end overflow-hidden bg-gray-100">
+            <div className={mediaPanelClass}>
               <img
                 src={mediaImages[activeMediaIndex % 2 === 0 ? activeMediaIndex : (activeMediaIndex - 1 + mediaImages.length) % mediaImages.length]}
                 alt="Executive Pro Cleaner portfolio"
@@ -455,7 +475,7 @@ function App() {
 
         <section id="about" className="scroll-mt-[5.5rem] min-h-[calc(100vh-5.5rem)] flex items-start pt-28 pb-16 lg:pt-32 lg:pb-24 relative z-10 bg-gray-50 border-t border-gray-100">
           <div className="max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-16">
-            <div className="grid lg:grid-cols-[52%_48%] gap-10 lg:gap-16 items-start">
+            <div className="grid md:grid-cols-[52%_48%] gap-8 lg:gap-14 items-start">
               <div className="reveal active">
                 <p className="rounded-ui-font text-brand-green font-black text-sm uppercase tracking-[0.28em] mb-4">About</p>
                 <h2 className="font-heading font-black text-5xl md:text-6xl lg:text-7xl text-brand-black tracking-tighter uppercase leading-[0.95]">
@@ -483,26 +503,30 @@ function App() {
                 </div>
               </div>
 
-              <div className="reveal active self-stretch flex items-end justify-end">
-                <div className="w-full h-full mt-0 bg-brand-green rounded-3xl p-6 md:p-8 shadow-lg relative overflow-hidden smooth-hover hover:-translate-y-2 flex flex-col justify-center">
-                  <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-2xl transform translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-                  <h3 className="rounded-ui-font font-black text-2xl text-white uppercase tracking-tight relative z-10 mb-10">Why Choose Us?</h3>
-                  <ul className="grid grid-cols-1 gap-5 relative z-10">
-                    {[
-                      '100% Satisfaction focus on every single residential or commercial job.',
-                      'Transparent, upfront pricing with strictly no hidden fees.',
-                      'Specialized in high-volume deep cleaning for offices, showrooms, and factories.',
-                      'Flexible, affordable packages tailored strictly to your needs.',
-                    ].map((item) => (
-                      <li key={item} className="flex items-start gap-4">
-                        <div className="bg-white/20 p-2 rounded-full mt-0.5 shrink-0 backdrop-blur-sm">
-                          <Check className="w-4 h-4 text-white" />
-                        </div>
-                        <span className="rounded-ui-font text-white/95 font-semibold text-sm leading-relaxed">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+              <div className={aboutMediaPanelClass}>
+                {showcaseMedia.map((item, index) => (
+                  item.type === 'video' ? (
+                    <video
+                      key={item.src}
+                      src={item.src}
+                      className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-1000 ease-in-out ${index === activeShowcaseIndex ? 'opacity-100' : 'opacity-0'}`}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                    />
+                  ) : (
+                    <img
+                      key={item.src}
+                      src={item.src}
+                      alt={`Executive Pro Cleaner showcase ${index + 1}`}
+                      className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-1000 ease-in-out ${index === activeShowcaseIndex ? 'opacity-100' : 'opacity-0'}`}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  )
+                ))}
               </div>
             </div>
           </div>
