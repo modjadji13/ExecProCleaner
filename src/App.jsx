@@ -532,32 +532,33 @@ function App() {
           </div>
         </section>
 
-        <section id="services" className="py-12 lg:py-20 relative z-10 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-10 reveal flex flex-col items-center">
-              <h2 className="font-heading font-black text-3xl md:text-4xl text-brand-black tracking-tight uppercase">Core <span className="text-brand-green">Services</span></h2>
-              <div className="w-20 h-1.5 bg-brand-green mt-4 mb-4 rounded-full" />
-              <p className="text-gray-500 font-medium max-w-2xl text-base">Modular, scalable cleaning solutions designed for maximum hygiene.</p>
-            </div>
+        <section id="services" className="scroll-mt-[5.5rem] py-16 lg:py-24 relative z-10 bg-white">
+          <div className="max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-16">
+            <div className="grid lg:grid-cols-[34%_66%] gap-10 lg:gap-16 items-start">
+              <div className="reveal active">
+                <p className="rounded-ui-font text-brand-green font-black text-sm uppercase tracking-[0.28em] mb-4">Services</p>
+                <h2 className="font-heading font-black text-5xl md:text-6xl lg:text-7xl text-brand-black tracking-tighter uppercase leading-[0.95]">
+                  Core <span className="text-brand-green">Services</span>
+                </h2>
+                <p className="rounded-ui-font text-brand-black text-xl leading-relaxed mt-8 font-semibold max-w-xl">Modular, scalable cleaning solutions designed for maximum hygiene.</p>
+              </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {services.map((service, index) => {
                 const Icon = service.icon
-                const className = service.wide
-                  ? 'bento-card reveal p-5 rounded-xl shadow-sm bg-gray-50 border border-gray-100 md:col-span-2 flex flex-col sm:flex-row items-start sm:items-center gap-5 group hover:border-brand-green'
-                  : 'bento-card reveal p-5 rounded-xl shadow-sm bg-gray-50 border border-gray-100 flex items-start gap-4 group hover:border-brand-green'
                 return (
-                  <div key={service.title} className={className} style={{ transitionDelay: `${index * 50}ms` }}>
-                    <div className="icon-box w-12 h-12 shrink-0 bg-brand-green/10 rounded-lg flex items-center justify-center text-brand-green">
+                  <div key={service.title} className="bento-card reveal active min-h-[148px] p-6 rounded-2xl shadow-sm bg-white border border-gray-100 flex items-start gap-5 group hover:border-brand-green" style={{ transitionDelay: `${index * 50}ms` }}>
+                    <div className="icon-box w-12 h-12 shrink-0 bg-brand-green/10 rounded-xl flex items-center justify-center text-brand-green">
                       <Icon className="w-6 h-6" />
                     </div>
                     <div className="flex flex-col justify-center">
-                      <h3 className={`${service.wide ? 'font-heading text-lg' : 'text-base'} font-bold text-brand-black mb-1 uppercase tracking-tight`}>{service.title}</h3>
-                      <p className={`${service.wide ? 'text-sm' : 'text-xs'} text-gray-600 font-medium leading-snug`}>{service.description}</p>
+                      <h3 className="rounded-ui-font text-base font-black text-brand-black mb-1.5 uppercase tracking-tight">{service.title}</h3>
+                      <p className="rounded-ui-font text-sm text-gray-600 font-semibold leading-relaxed">{service.description}</p>
                     </div>
                   </div>
                 )
               })}
+              </div>
             </div>
           </div>
         </section>
