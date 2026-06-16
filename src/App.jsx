@@ -80,8 +80,9 @@ const pricingCards = [
     title: 'Carpet Solutions',
     service: 'Carpets',
     icon: Layers,
+    imageIcon: '/icons/carpet-cleaning.png',
     lines: [
-      ['160cm x 230cm', 'R300'],
+      ['160cm x 230cm', 'R350'],
       ['200cm x 290cm', 'R400'],
       ['250cm x 350cm', 'R500'],
       ['300cm x 400cm', 'R600'],
@@ -91,12 +92,13 @@ const pricingCards = [
     title: 'Upholstery',
     service: 'Dining chairs',
     icon: Sofa,
+    imageIcon: '/icons/chair-cleaning.png',
     lines: [
       ['1 Seater Couch', 'R300'],
       ['2 Seater Couch', 'R400'],
       ['3 Seater Couch', 'R500'],
       ['4 Seater Couch', 'R600'],
-      ['Single/3Q Mattress', 'R350'],
+      ['Single/3Q Mattress', 'R400'],
       ['King/Queen Mattress', 'R550'],
     ],
   },
@@ -104,17 +106,19 @@ const pricingCards = [
     title: 'Full Home Clean',
     service: 'Other / Multiple Services',
     icon: Home,
+    imageIcon: '/icons/home-cleaning.png',
     lines: [
-      ['1 Bedroom House', 'R800'],
-      ['2 Bedrooms House', 'R1200'],
-      ['3 Bedrooms House', 'R1800'],
-      ['4 Bedrooms House', 'R3000'],
+      ['1 Bedroom House', 'R1500'],
+      ['2 Bedrooms House', 'R2000'],
+      ['3 Bedrooms House', 'R2500'],
+      ['4 Bedrooms House', 'R3500'],
     ],
   },
   {
     title: 'Cars Deep Cleaning',
     service: 'Car interior',
     icon: Car,
+    imageIcon: '/icons/car-cleaning.png',
     lines: [
       ['Hatchback', 'R500'],
       ['Sedan', 'R600'],
@@ -126,12 +130,21 @@ const pricingCards = [
     title: 'Window Cleaning',
     service: 'Windows',
     icon: AppWindow,
+    imageIcon: '/icons/windows-cleaning.png',
     lines: [
-      ['Standard (up to 5)', 'R400'],
-      ['Large (up to 10)', 'R600'],
-      ['Complete House (up to 20)', 'R850'],
+      ['Standard (up to 5)', 'R450'],
+      ['Large (up to 10)', 'R750'],
+      ['Complete House (up to 20)', 'R950'],
     ],
   },
+]
+
+const pricingIconSkins = [
+  'bg-[radial-gradient(circle_at_28%_22%,#dcfce7,#22c55e_58%,#14532d)] shadow-[0_14px_28px_-12px_rgba(34,197,94,0.8)]',
+  'bg-[radial-gradient(circle_at_28%_22%,#e0f2fe,#38bdf8_58%,#075985)] shadow-[0_14px_28px_-12px_rgba(14,165,233,0.75)]',
+  'bg-[radial-gradient(circle_at_28%_22%,#fef3c7,#f59e0b_58%,#92400e)] shadow-[0_14px_28px_-12px_rgba(245,158,11,0.75)]',
+  'bg-[radial-gradient(circle_at_28%_22%,#fee2e2,#ef4444_58%,#991b1b)] shadow-[0_14px_28px_-12px_rgba(239,68,68,0.75)]',
+  'bg-[radial-gradient(circle_at_28%_22%,#ede9fe,#8b5cf6_58%,#4c1d95)] shadow-[0_14px_28px_-12px_rgba(139,92,246,0.75)]',
 ]
 
 const servicePills = [
@@ -400,9 +413,8 @@ function App() {
 
             <div className="hidden md:flex flex-1 max-w-[760px] items-center justify-center gap-12 lg:gap-16 xl:gap-20 ml-auto mr-8">
               <a href="#about" className="rounded-ui-font font-bold text-lg tracking-wide text-brand-black hover:text-brand-green transition-colors uppercase" onClick={onAnchorClick('#about')}>About</a>
-              <a href="#services" className="rounded-ui-font font-bold text-lg tracking-wide text-brand-black hover:text-brand-green transition-colors uppercase" onClick={onAnchorClick('#services')}>Services</a>
-              <a href="#pricing" className="rounded-ui-font font-bold text-lg tracking-wide text-brand-black hover:text-brand-green transition-colors uppercase" onClick={onAnchorClick('#pricing')}>Pricing</a>
-              <a href="#contact" className="rounded-ui-font w-44 min-h-[60px] bg-brand-black text-white px-8 py-3.5 rounded-xl font-bold text-lg hover:bg-brand-green transition-all duration-300 shadow-soft hover:shadow-hover text-center flex items-center justify-center group" onClick={onAnchorClick('#contact')}>Book Now</a>
+              <a href="#pricing" className="rounded-ui-font font-bold text-lg tracking-wide text-brand-black hover:text-brand-green transition-colors uppercase" onClick={onAnchorClick('#pricing')}>Services</a>
+              <a href="#contact" className="rounded-ui-font w-44 min-h-[60px] bg-brand-black text-white px-8 py-3.5 rounded-xl font-bold text-lg hover:bg-brand-green transition-all duration-300 hover:-translate-y-0.5 text-center flex items-center justify-center group" onClick={onAnchorClick('#contact')}>Book Now</a>
             </div>
 
             <div className="md:hidden flex items-center">
@@ -416,10 +428,9 @@ function App() {
         <div className={`${mobileOpen ? 'block' : 'hidden'} md:hidden bg-white border-b border-gray-100 absolute w-full shadow-2xl z-40`}>
           <div className="px-6 pt-4 pb-8 space-y-4 flex flex-col">
             <a href="#about" className="mobile-link block font-bold text-lg text-brand-black hover:text-brand-green transition-colors" onClick={onAnchorClick('#about')}>About Us</a>
-            <a href="#services" className="mobile-link block font-bold text-lg text-brand-black hover:text-brand-green transition-colors" onClick={onAnchorClick('#services')}>Our Services</a>
-            <a href="#pricing" className="mobile-link block font-bold text-lg text-brand-black hover:text-brand-green transition-colors" onClick={onAnchorClick('#pricing')}>Transparent Pricing</a>
+            <a href="#pricing" className="mobile-link block font-bold text-lg text-brand-black hover:text-brand-green transition-colors" onClick={onAnchorClick('#pricing')}>Our Services</a>
             <a href="#contact" className="mobile-link block font-bold text-lg text-brand-black hover:text-brand-green transition-colors" onClick={onAnchorClick('#contact')}>Book a Service</a>
-            <a href="#contact" className="mobile-link mt-4 w-full bg-brand-green text-white px-4 py-4 rounded-xl font-bold text-center shadow-md flex justify-center items-center gap-2 group" onClick={onAnchorClick('#contact')}>Book Now <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" /></a>
+            <a href="#contact" className="mobile-link mt-4 w-full bg-brand-green text-white px-4 py-4 rounded-xl font-bold text-center flex justify-center items-center gap-2 group" onClick={onAnchorClick('#contact')}>Book Now <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" /></a>
           </div>
         </div>
       </nav>
@@ -444,7 +455,7 @@ function App() {
                 </p>
 
                 <div className="rounded-ui-font flex flex-col sm:flex-row justify-center gap-4 w-full mb-4">
-                  <a href="#contact" className="w-full sm:w-44 min-h-[60px] bg-brand-black text-white px-8 py-3.5 rounded-xl font-bold text-lg hover:bg-brand-green transition-all duration-300 shadow-soft hover:shadow-hover text-center flex items-center justify-center group" onClick={onAnchorClick('#contact')}>Book Now</a>
+                  <a href="#contact" className="w-full sm:w-44 min-h-[60px] bg-brand-black text-white px-8 py-3.5 rounded-xl font-bold text-lg hover:bg-brand-green transition-all duration-300 hover:-translate-y-0.5 text-center flex items-center justify-center group" onClick={onAnchorClick('#contact')}>Book Now</a>
                   <a href="#pricing" className="w-full sm:w-44 min-h-[60px] bg-white text-brand-black border-2 border-gray-200 px-8 py-3.5 rounded-xl font-bold text-lg hover:border-brand-black transition-all duration-300 text-center flex items-center justify-center" onClick={onAnchorClick('#pricing')}>View Pricing</a>
                 </div>
 
@@ -532,54 +543,23 @@ function App() {
           </div>
         </section>
 
-        <section id="services" className="scroll-mt-[5.5rem] py-16 lg:py-24 relative z-10 bg-white">
-          <div className="max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-16">
-            <div className="grid lg:grid-cols-[34%_66%] gap-10 lg:gap-16 items-start">
-              <div className="reveal active">
-                <p className="rounded-ui-font text-brand-green font-black text-sm uppercase tracking-[0.28em] mb-4">Services</p>
-                <h2 className="font-heading font-black text-5xl md:text-6xl lg:text-7xl text-brand-black tracking-tighter uppercase leading-[0.95]">
-                  Core <span className="text-brand-green">Services</span>
-                </h2>
-                <p className="rounded-ui-font text-brand-black text-xl leading-relaxed mt-8 font-semibold max-w-xl">Modular, scalable cleaning solutions designed for maximum hygiene.</p>
-              </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {services.map((service, index) => {
-                const Icon = service.icon
-                return (
-                  <div key={service.title} className="bento-card reveal active min-h-[148px] p-6 rounded-2xl shadow-sm bg-white border border-gray-100 flex items-start gap-5 group hover:border-brand-green" style={{ transitionDelay: `${index * 50}ms` }}>
-                    <div className="icon-box w-12 h-12 shrink-0 bg-brand-green/10 rounded-xl flex items-center justify-center text-brand-green">
-                      <Icon className="w-6 h-6" />
-                    </div>
-                    <div className="flex flex-col justify-center">
-                      <h3 className="rounded-ui-font text-base font-black text-brand-black mb-1.5 uppercase tracking-tight">{service.title}</h3>
-                      <p className="rounded-ui-font text-sm text-gray-600 font-semibold leading-relaxed">{service.description}</p>
-                    </div>
-                  </div>
-                )
-              })}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="pricing" className="py-12 lg:py-16 relative z-10 bg-white border-t border-b border-gray-100">
+        <section id="pricing" className="scroll-mt-[6rem] pt-20 pb-12 lg:pt-24 lg:pb-16 relative z-10 bg-white border-t border-b border-gray-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-10 reveal flex flex-col items-center">
-              <h2 className="font-heading font-black text-3xl md:text-4xl text-brand-black tracking-tight uppercase">Transparent <span className="text-brand-green">Pricing</span></h2>
-              <div className="w-20 h-1.5 bg-brand-green mt-4 mb-4 rounded-full" />
-              <p className="text-gray-500 font-medium max-w-2xl text-base">Clear, upfront rates with no hidden fees.</p>
-            </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {pricingCards.map((card, index) => {
                 const Icon = card.icon
                 return (
-                  <div key={card.title} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 lg:p-6 reveal smooth-hover hover:shadow-soft group flex flex-col" style={{ transitionDelay: `${index * 50}ms` }}>
-                    <div className="flex items-center gap-3 mb-5 border-b border-gray-100 pb-4">
-                      <div className="bg-brand-light p-2.5 rounded-lg text-brand-green group-hover:bg-brand-green group-hover:text-white transition-colors duration-300">
-                        <Icon className="w-5 h-5" />
-                      </div>
+                  <div key={card.title} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 lg:p-6 reveal active smooth-hover hover:shadow-soft group flex flex-col" style={{ transitionDelay: `${index * 50}ms` }}>
+                    <div className="flex items-center gap-4 mb-5 border-b border-gray-100 pb-4">
+                      {card.imageIcon ? (
+                        <img src={card.imageIcon} alt="" className="w-16 h-16 shrink-0 object-contain transition-transform duration-300 group-hover:-translate-y-1" loading="lazy" decoding="async" />
+                      ) : (
+                        <div className={`relative w-14 h-14 shrink-0 rounded-2xl flex items-center justify-center text-white overflow-hidden ring-1 ring-white/70 transition-transform duration-300 group-hover:-translate-y-1 group-hover:rotate-[-2deg] ${pricingIconSkins[index % pricingIconSkins.length]}`}>
+                          <div className="absolute inset-x-2 top-1 h-5 rounded-full bg-white/35 blur-[2px]" />
+                          <div className="absolute inset-0 rounded-2xl shadow-[inset_0_-10px_18px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.55)]" />
+                          <Icon className="relative z-10 w-7 h-7 drop-shadow-[0_3px_5px_rgba(0,0,0,0.3)]" strokeWidth={2.4} />
+                        </div>
+                      )}
                       <h3 className="font-heading font-bold text-base uppercase text-brand-black">{card.title}</h3>
                     </div>
                     <ul className="space-y-2.5 mb-5 flex-grow">
@@ -590,13 +570,17 @@ function App() {
                         </li>
                       ))}
                     </ul>
-                    <a href="#contact" className="block w-full text-center py-2.5 rounded-lg bg-gray-50 text-brand-green font-bold text-xs uppercase tracking-wider border border-gray-200 group-hover:bg-brand-green group-hover:text-white group-hover:border-brand-green transition-all duration-300" onClick={addToBooking(card.service)}>Add to Booking</a>
+                    <a href="#contact" className="block w-full text-center py-2.5 rounded-lg text-white font-bold text-xs uppercase tracking-wider border bg-brand-black border-brand-black hover:bg-brand-green hover:border-brand-green transition-all duration-300 hover:-translate-y-0.5" onClick={addToBooking(card.service)}>Add to Booking</a>
                   </div>
                 )
               })}
 
-              <div className="bg-brand-green rounded-2xl shadow-sm border border-brand-darkGreen p-5 lg:p-6 reveal smooth-hover hover:shadow-soft group flex flex-col justify-center items-center text-center" style={{ transitionDelay: '250ms' }}>
-                <Info className="w-8 h-8 text-white mb-3" />
+              <div className="bg-brand-green rounded-2xl shadow-sm border border-brand-darkGreen p-5 lg:p-6 reveal active smooth-hover hover:shadow-soft group flex flex-col justify-center items-center text-center" style={{ transitionDelay: '250ms' }}>
+                <div className="relative w-16 h-16 rounded-2xl flex items-center justify-center text-brand-green bg-[radial-gradient(circle_at_28%_22%,#ffffff,#dcfce7_58%,#86efac)] shadow-[0_16px_30px_-12px_rgba(0,0,0,0.45)] overflow-hidden mb-4 transition-transform duration-300 group-hover:-translate-y-1">
+                  <div className="absolute inset-x-2 top-1 h-6 rounded-full bg-white/70 blur-[2px]" />
+                  <div className="absolute inset-0 rounded-2xl shadow-[inset_0_-10px_18px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.8)]" />
+                  <Info className="relative z-10 w-8 h-8 drop-shadow-[0_3px_5px_rgba(0,0,0,0.2)]" />
+                </div>
                 <h3 className="font-heading font-bold text-base uppercase text-white mb-2">Custom Quote?</h3>
                 <p className="text-brand-light font-medium text-xs mb-5">Need office cleaning or a custom combination? Contact us for a tailored quote.</p>
                 <a href="#contact" className="block w-full text-center py-2.5 rounded-lg bg-white text-brand-green font-bold text-xs uppercase tracking-wider hover:bg-brand-light transition-all duration-300" onClick={onAnchorClick('#contact')}>Contact Us</a>
@@ -605,115 +589,69 @@ function App() {
           </div>
         </section>
 
-        <section id="contact" className="py-16 lg:py-24 bg-gray-50 relative">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 reveal">
-            <div className="text-center mb-12 flex flex-col items-center">
-              <h2 className="font-heading font-black text-3xl md:text-4xl text-brand-black tracking-tight uppercase">Request a <span className="text-brand-green">Cleaning</span></h2>
-              <div className="w-20 h-1.5 bg-brand-green mt-4 mb-4 rounded-full" />
-              <p className="text-gray-600 font-medium text-base max-w-xl">Complete the details below. We'll confirm your slot within minutes.</p>
-            </div>
-
-            <form className="space-y-6" onSubmit={handleSubmit}>
-              <div className="bg-white border border-gray-200 rounded-3xl p-6 md:p-8 shadow-sm relative overflow-hidden group hover:border-brand-green/50 transition-colors">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-brand-green font-black text-sm">1</div>
-                  <h3 className="font-heading font-bold text-brand-black uppercase tracking-widest text-sm">Select Service</h3>
+        <section id="contact" className="py-8 lg:py-10 bg-gray-50 relative">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 reveal active">
+            <form className="bg-white border border-gray-200 rounded-3xl p-5 md:p-7 shadow-sm" onSubmit={handleSubmit}>
+              <div className="grid md:grid-cols-2 gap-x-8 gap-y-5">
+                <div>
+                  <label htmlFor="name" className="font-heading font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Full Name *</label>
+                  <input id="name" type="text" value={formData.name} onChange={handleInput} className="w-full h-14 rounded-2xl border border-gray-200 bg-gray-50 px-5 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors" placeholder="e.g. Kagiso Mokope" required />
                 </div>
 
-                <div className="flex flex-wrap gap-3 max-h-[160px] overflow-y-auto hide-scrollbar pb-1">
-                  {servicePills.map((pill) => {
-                    const Icon = pill.icon
-                    const active = formData.service === pill.label
-                    return (
-                      <button
-                        key={pill.label}
-                        type="button"
-                        onClick={() => selectService(pill.label)}
-                        className={`service-pill px-5 py-3 rounded-xl flex items-center gap-2.5 text-xs font-bold uppercase tracking-wider transition-all border ${active ? 'bg-brand-green text-white border-brand-green shadow-sm' : 'bg-gray-50 text-gray-600 border-gray-200 hover:border-brand-green hover:bg-green-50'}`}
-                      >
-                        <Icon className="w-4 h-4" /> {pill.short}
-                      </button>
-                    )
-                  })}
+                <div>
+                  <label htmlFor="phone" className="font-heading font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Phone Number *</label>
+                  <input id="phone" type="tel" value={formData.phone} onChange={handleInput} className="w-full h-14 rounded-2xl border border-gray-200 bg-gray-50 px-5 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors" placeholder="e.g. 082 123 4567" required />
                 </div>
-              </div>
 
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-white border border-gray-200 rounded-3xl p-6 md:p-8 shadow-sm group hover:border-brand-green/50 transition-colors">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-brand-green font-black text-sm">2</div>
-                    <h3 className="font-heading font-bold text-brand-black uppercase tracking-widest text-sm">Your Details</h3>
-                  </div>
-                  <div className="space-y-4">
-                    <div className="relative bg-gray-50 rounded-2xl border border-gray-200 focus-within:border-brand-green focus-within:bg-white transition-all duration-300">
-                      <input id="name" type="text" value={formData.name} onChange={handleInput} className="peer w-full px-5 pt-6 pb-2.5 bg-transparent text-brand-black font-medium outline-none placeholder-transparent" placeholder="Full Name" required />
-                      <label htmlFor="name" className="absolute left-5 top-4 text-gray-500 text-xs font-bold uppercase tracking-widest transition-all duration-300 peer-placeholder-shown:top-4 peer-placeholder-shown:text-xs peer-focus:top-2 peer-focus:text-[9px] peer-focus:text-brand-green pointer-events-none">Full Name</label>
-                    </div>
-                    <div className="relative bg-gray-50 rounded-2xl border border-gray-200 focus-within:border-brand-green focus-within:bg-white transition-all duration-300">
-                      <input id="phone" type="tel" value={formData.phone} onChange={handleInput} className="peer w-full px-5 pt-6 pb-2.5 bg-transparent text-brand-black font-medium outline-none placeholder-transparent" placeholder="Phone Number" required />
-                      <label htmlFor="phone" className="absolute left-5 top-4 text-gray-500 text-xs font-bold uppercase tracking-widest transition-all duration-300 peer-placeholder-shown:top-4 peer-placeholder-shown:text-xs peer-focus:top-2 peer-focus:text-[9px] peer-focus:text-brand-green pointer-events-none">Phone Number</label>
-                    </div>
+                <div className="md:col-span-2">
+                  <label htmlFor="service" className="font-heading font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Service Required *</label>
+                  <div className="relative">
+                    <select id="service" value={formData.service} onChange={handleInput} className="w-full h-14 rounded-2xl border border-gray-200 bg-gray-50 px-5 pr-12 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors appearance-none cursor-pointer" required>
+                      {servicePills.map((pill) => <option key={pill.label} value={pill.label}>{pill.label}</option>)}
+                    </select>
+                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-black pointer-events-none" />
                   </div>
                 </div>
 
-                <div className="bg-white border border-gray-200 rounded-3xl p-6 md:p-8 shadow-sm group hover:border-brand-green/50 transition-colors">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-brand-green font-black text-sm">3</div>
-                    <h3 className="font-heading font-bold text-brand-black uppercase tracking-widest text-sm">Schedule</h3>
-                  </div>
-                  <div className="space-y-4">
-                    <div className="relative bg-gray-50 rounded-2xl border border-gray-200 focus-within:border-brand-green focus-within:bg-white transition-all duration-300">
-                      <input id="date" type="date" value={formData.date} onChange={handleInput} min={new Date().toISOString().split('T')[0]} className="peer w-full px-5 pt-6 pb-2.5 bg-transparent text-brand-black font-medium outline-none" required />
-                      <label htmlFor="date" className="absolute left-5 top-2 text-gray-500 peer-focus:text-brand-green text-[9px] font-bold uppercase tracking-widest pointer-events-none transition-colors">Preferred Date</label>
-                    </div>
-                    <div className="relative bg-gray-50 rounded-2xl border border-gray-200 focus-within:border-brand-green focus-within:bg-white transition-all duration-300">
-                      <select id="time" value={formData.time} onChange={handleInput} className="peer w-full px-5 pt-6 pb-2.5 bg-transparent text-brand-black font-medium outline-none appearance-none cursor-pointer" required>
-                        <option value="" disabled>Choose a slot...</option>
-                        {timeSlots.map((slot) => <option key={slot} value={slot}>{slot}</option>)}
-                      </select>
-                      <label htmlFor="time" className="absolute left-5 top-2 text-gray-500 peer-focus:text-brand-green text-[9px] font-bold uppercase tracking-widest pointer-events-none transition-colors">Time Slot</label>
-                      <div className="absolute inset-y-0 right-5 flex items-center pointer-events-none text-gray-500 mt-3">
-                        <ChevronDown className="w-4 h-4" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white border border-gray-200 rounded-3xl p-6 md:p-8 shadow-sm flex flex-col md:flex-row gap-6 md:gap-8 group hover:border-brand-green/50 transition-colors">
-                <div className="flex-1 flex flex-col">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-brand-green font-black text-sm">4</div>
-                    <h3 className="font-heading font-bold text-brand-black uppercase tracking-widest text-sm">Location</h3>
-                  </div>
-                  <div className="relative bg-gray-50 rounded-2xl border border-gray-200 focus-within:border-brand-green focus-within:bg-white transition-all duration-300 mb-4">
-                    <input id="address" type="text" value={formData.address} onChange={handleInput} className="peer w-full px-5 pt-6 pb-2.5 bg-transparent text-brand-black font-medium outline-none placeholder-transparent" placeholder="Full Address" required />
-                    <label htmlFor="address" className="absolute left-5 top-4 text-gray-500 text-xs font-bold uppercase tracking-widest transition-all duration-300 peer-placeholder-shown:top-4 peer-placeholder-shown:text-xs peer-focus:top-2 peer-focus:text-[9px] peer-focus:text-brand-green pointer-events-none">Full Address</label>
-                  </div>
-                  <p className="text-gray-500 text-xs leading-relaxed mt-auto hidden md:block">Accurate locations ensure our team arrives promptly with the correct equipment for your space.</p>
+                <div>
+                  <label htmlFor="date" className="font-heading font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Preferred Date *</label>
+                  <input id="date" type="date" value={formData.date} onChange={handleInput} min={new Date().toISOString().split('T')[0]} className="w-full h-14 rounded-2xl border border-gray-200 bg-gray-50 px-5 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors" required />
                 </div>
 
-                <div className="flex-1 relative min-h-[200px] bg-gray-100 rounded-2xl border border-gray-200 flex flex-col items-center justify-center overflow-hidden transition-all duration-300">
-                  <div className={`text-center p-6 z-10 flex flex-col items-center justify-center absolute inset-0 bg-gray-50/80 backdrop-blur-sm transition-opacity duration-500 ${findMeState === 'success' ? 'opacity-0 pointer-events-none' : ''}`}>
-                    <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-3 text-brand-green shadow-sm border border-gray-100">
-                      <MapPin className="w-5 h-5" />
-                    </div>
-                    <button type="button" onClick={handleFindMe} className={`px-5 py-2.5 rounded-xl text-xs font-bold tracking-widest uppercase flex items-center gap-2 transition-all duration-300 shadow-md group ${findMeState === 'success' ? 'bg-brand-darkGreen text-white' : 'bg-brand-black text-white hover:bg-brand-green'}`}>
-                      {locationButtonContent[findMeState]}
+                <div>
+                  <label htmlFor="time" className="font-heading font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Time Slot *</label>
+                  <div className="relative">
+                    <select id="time" value={formData.time} onChange={handleInput} className="w-full h-14 rounded-2xl border border-gray-200 bg-gray-50 px-5 pr-12 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors appearance-none cursor-pointer" required>
+                      <option value="" disabled>Choose a slot...</option>
+                      {timeSlots.map((slot) => <option key={slot} value={slot}>{slot}</option>)}
+                    </select>
+                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-black pointer-events-none" />
+                  </div>
+                </div>
+
+                <div className="md:col-span-2">
+                  <label htmlFor="address" className="font-heading font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Full Address *</label>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <input id="address" type="text" value={formData.address} onChange={handleInput} className="w-full h-14 rounded-2xl border border-gray-200 bg-gray-50 px-5 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors" placeholder="e.g. Silverton, Pretoria" required />
+                    <button type="button" onClick={handleFindMe} className={`h-14 sm:w-48 px-5 rounded-2xl font-heading font-black uppercase text-sm tracking-tight flex items-center justify-center gap-2 transition-colors ${findMeState === 'success' ? 'bg-brand-green text-white' : 'bg-brand-black text-white hover:bg-brand-green'}`}>
+                      <Navigation className="w-4 h-4" /> {findMeState === 'success' ? 'Located' : 'Auto-Locate'}
                     </button>
                   </div>
+                </div>
 
-                  <iframe title="Service location map" src={mapSrc} className="absolute inset-0 w-full h-full border-0 opacity-100 transition-opacity duration-700" allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+                <div className="md:col-span-2">
+                  <label htmlFor="details" className="font-heading font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Additional Details</label>
+                  <textarea id="details" className="w-full min-h-24 rounded-2xl border border-gray-200 bg-gray-50 px-5 py-4 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors resize-y" placeholder="Any specific requirements or questions?" />
                 </div>
               </div>
 
-              <div className="pt-4 flex flex-col items-center">
-                <button type="submit" disabled={submitState === 'loading'} className="w-full bg-brand-green text-white font-bold text-sm tracking-widest uppercase py-5 rounded-2xl hover:bg-brand-darkGreen transition-all duration-300 flex justify-center items-center gap-2 group shadow-[0_10px_20px_-5px_rgba(34,122,51,0.3)] hover:shadow-[0_15px_30px_-5px_rgba(34,122,51,0.4)] hover:-translate-y-1 disabled:opacity-80 disabled:cursor-not-allowed disabled:hover:translate-y-0">
+              <div className="pt-6 flex flex-col items-center">
+                <button type="submit" disabled={submitState === 'loading'} className="w-full rounded-2xl bg-brand-black text-white font-heading font-black text-lg tracking-widest uppercase py-5 hover:bg-brand-green transition-all duration-300 flex justify-center items-center gap-2 group shadow-[8px_8px_0_0_rgba(34,122,51,0.75)] hover:shadow-[4px_4px_0_0_rgba(15,23,42,0.85)] disabled:opacity-80 disabled:cursor-not-allowed">
                   <span>{submitState === 'loading' ? 'Processing...' : 'Confirm Booking Request'}</span>
                   {submitState === 'loading' ? <Loader className="w-4 h-4 animate-spin" /> : <CheckCircle className="w-4 h-4 group-hover:scale-110 transition-transform" />}
                 </button>
 
-                <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-gray-500 text-[10px] font-bold uppercase tracking-widest">
+                <div className="mt-3 flex flex-wrap items-center justify-center gap-4 text-gray-500 text-[10px] font-bold uppercase tracking-widest">
                   <div className="flex items-center gap-1.5"><Lock className="w-3.5 h-3.5" /> SSL Secure</div>
                   <span className="text-gray-300 hidden sm:inline">&bull;</span>
                   <div className="flex items-center gap-1.5 text-brand-black"><Star className="w-3.5 h-3.5 text-brand-green fill-current" /> 5.0 Rated</div>
