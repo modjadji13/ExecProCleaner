@@ -28,6 +28,13 @@ body {
   font-family: 'Nunito Sans', Inter, sans-serif;
 }
 
+.rounded-ui-font input,
+.rounded-ui-font select,
+.rounded-ui-font textarea,
+.rounded-ui-font button {
+  font-family: 'Nunito Sans', Inter, sans-serif;
+}
+
 .marker-font {
   font-family: 'Permanent Marker', cursive;
 }

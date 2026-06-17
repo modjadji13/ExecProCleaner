@@ -18,15 +18,13 @@ import {
   Instagram,
   Layers,
   Loader,
-  Lock,
   MapPin,
   Menu,
+  MessageCircle,
   Navigation,
   Plus,
-  ShieldCheck,
   Sofa,
   Square,
-  Star,
   X,
 } from 'lucide-react'
 
@@ -175,6 +173,7 @@ function App() {
   const [activeMediaIndex, setActiveMediaIndex] = useState(0)
   const [activeShowcaseIndex, setActiveShowcaseIndex] = useState(0)
   const [isMediaOpen, setIsMediaOpen] = useState(false)
+  const [chatOpen, setChatOpen] = useState(false)
   const [mapSrc, setMapSrc] = useState(defaultMapSrc)
   const hideSuccessTimer = useRef(null)
   const touchStartX = useRef(null)
@@ -589,24 +588,24 @@ function App() {
           </div>
         </section>
 
-        <section id="contact" className="py-8 lg:py-10 bg-gray-50 relative">
+        <section id="contact" className="rounded-ui-font py-8 lg:py-10 bg-gray-50 relative">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 reveal active">
-            <form className="bg-white border border-gray-200 rounded-3xl p-5 md:p-7 shadow-sm" onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
               <div className="grid md:grid-cols-2 gap-x-8 gap-y-5">
                 <div>
-                  <label htmlFor="name" className="font-heading font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Full Name *</label>
-                  <input id="name" type="text" value={formData.name} onChange={handleInput} className="w-full h-14 rounded-2xl border border-gray-200 bg-gray-50 px-5 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors" placeholder="e.g. Kagiso Mokope" required />
+                  <label htmlFor="name" className="font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Full Name <span className="text-brand-green">*</span></label>
+                  <input id="name" type="text" value={formData.name} onChange={handleInput} className="w-full h-14 rounded-xl border border-gray-200 bg-gray-50 px-5 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors" placeholder="e.g. Kagiso Mokope" required />
                 </div>
 
                 <div>
-                  <label htmlFor="phone" className="font-heading font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Phone Number *</label>
-                  <input id="phone" type="tel" value={formData.phone} onChange={handleInput} className="w-full h-14 rounded-2xl border border-gray-200 bg-gray-50 px-5 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors" placeholder="e.g. 082 123 4567" required />
+                  <label htmlFor="phone" className="font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Phone Number <span className="text-brand-green">*</span></label>
+                  <input id="phone" type="tel" value={formData.phone} onChange={handleInput} className="w-full h-14 rounded-xl border border-gray-200 bg-gray-50 px-5 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors" placeholder="e.g. 082 123 4567" required />
                 </div>
 
                 <div className="md:col-span-2">
-                  <label htmlFor="service" className="font-heading font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Service Required *</label>
+                  <label htmlFor="service" className="font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Service Required <span className="text-brand-green">*</span></label>
                   <div className="relative">
-                    <select id="service" value={formData.service} onChange={handleInput} className="w-full h-14 rounded-2xl border border-gray-200 bg-gray-50 px-5 pr-12 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors appearance-none cursor-pointer" required>
+                    <select id="service" value={formData.service} onChange={handleInput} className="w-full h-14 rounded-xl border border-gray-200 bg-gray-50 px-5 pr-12 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors appearance-none cursor-pointer" required>
                       {servicePills.map((pill) => <option key={pill.label} value={pill.label}>{pill.label}</option>)}
                     </select>
                     <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-black pointer-events-none" />
@@ -614,14 +613,14 @@ function App() {
                 </div>
 
                 <div>
-                  <label htmlFor="date" className="font-heading font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Preferred Date *</label>
-                  <input id="date" type="date" value={formData.date} onChange={handleInput} min={new Date().toISOString().split('T')[0]} className="w-full h-14 rounded-2xl border border-gray-200 bg-gray-50 px-5 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors" required />
+                  <label htmlFor="date" className="font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Preferred Date <span className="text-brand-green">*</span></label>
+                  <input id="date" type="date" value={formData.date} onChange={handleInput} min={new Date().toISOString().split('T')[0]} className="w-full h-14 rounded-xl border border-gray-200 bg-gray-50 px-5 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors" required />
                 </div>
 
                 <div>
-                  <label htmlFor="time" className="font-heading font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Time Slot *</label>
+                  <label htmlFor="time" className="font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Time Slot <span className="text-brand-green">*</span></label>
                   <div className="relative">
-                    <select id="time" value={formData.time} onChange={handleInput} className="w-full h-14 rounded-2xl border border-gray-200 bg-gray-50 px-5 pr-12 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors appearance-none cursor-pointer" required>
+                    <select id="time" value={formData.time} onChange={handleInput} className="w-full h-14 rounded-xl border border-gray-200 bg-gray-50 px-5 pr-12 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors appearance-none cursor-pointer" required>
                       <option value="" disabled>Choose a slot...</option>
                       {timeSlots.map((slot) => <option key={slot} value={slot}>{slot}</option>)}
                     </select>
@@ -630,34 +629,26 @@ function App() {
                 </div>
 
                 <div className="md:col-span-2">
-                  <label htmlFor="address" className="font-heading font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Full Address *</label>
+                  <label htmlFor="address" className="font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Full Address <span className="text-brand-green">*</span></label>
                   <div className="flex flex-col sm:flex-row gap-3">
-                    <input id="address" type="text" value={formData.address} onChange={handleInput} className="w-full h-14 rounded-2xl border border-gray-200 bg-gray-50 px-5 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors" placeholder="e.g. Silverton, Pretoria" required />
-                    <button type="button" onClick={handleFindMe} className={`h-14 sm:w-48 px-5 rounded-2xl font-heading font-black uppercase text-sm tracking-tight flex items-center justify-center gap-2 transition-colors ${findMeState === 'success' ? 'bg-brand-green text-white' : 'bg-brand-black text-white hover:bg-brand-green'}`}>
+                    <input id="address" type="text" value={formData.address} onChange={handleInput} className="w-full h-14 rounded-xl border border-gray-200 bg-gray-50 px-5 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors" placeholder="e.g. Silverton, Pretoria" required />
+                    <button type="button" onClick={handleFindMe} className={`h-14 sm:w-48 px-5 rounded-xl font-black uppercase text-sm tracking-tight flex items-center justify-center gap-2 transition-colors ${findMeState === 'success' ? 'bg-brand-green text-white' : 'bg-brand-black text-white hover:bg-brand-green'}`}>
                       <Navigation className="w-4 h-4" /> {findMeState === 'success' ? 'Located' : 'Auto-Locate'}
                     </button>
                   </div>
                 </div>
 
                 <div className="md:col-span-2">
-                  <label htmlFor="details" className="font-heading font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Additional Details</label>
-                  <textarea id="details" className="w-full min-h-24 rounded-2xl border border-gray-200 bg-gray-50 px-5 py-4 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors resize-y" placeholder="Any specific requirements or questions?" />
+                  <label htmlFor="details" className="font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Additional Details</label>
+                  <textarea id="details" className="w-full min-h-24 rounded-xl border border-gray-200 bg-gray-50 px-5 py-4 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors resize-y" placeholder="Any specific requirements or questions?" />
                 </div>
               </div>
 
               <div className="pt-6 flex flex-col items-center">
-                <button type="submit" disabled={submitState === 'loading'} className="w-full rounded-2xl bg-brand-black text-white font-heading font-black text-lg tracking-widest uppercase py-5 hover:bg-brand-green transition-all duration-300 flex justify-center items-center gap-2 group shadow-[8px_8px_0_0_rgba(34,122,51,0.75)] hover:shadow-[4px_4px_0_0_rgba(15,23,42,0.85)] disabled:opacity-80 disabled:cursor-not-allowed">
+                <button type="submit" disabled={submitState === 'loading'} className="w-full rounded-xl bg-brand-black text-white font-black text-lg tracking-widest uppercase py-5 hover:bg-brand-green transition-all duration-300 flex justify-center items-center gap-2 group disabled:opacity-80 disabled:cursor-not-allowed">
                   <span>{submitState === 'loading' ? 'Processing...' : 'Confirm Booking Request'}</span>
                   {submitState === 'loading' ? <Loader className="w-4 h-4 animate-spin" /> : <CheckCircle className="w-4 h-4 group-hover:scale-110 transition-transform" />}
                 </button>
-
-                <div className="mt-3 flex flex-wrap items-center justify-center gap-4 text-gray-500 text-[10px] font-bold uppercase tracking-widest">
-                  <div className="flex items-center gap-1.5"><Lock className="w-3.5 h-3.5" /> SSL Secure</div>
-                  <span className="text-gray-300 hidden sm:inline">&bull;</span>
-                  <div className="flex items-center gap-1.5 text-brand-black"><Star className="w-3.5 h-3.5 text-brand-green fill-current" /> 5.0 Rated</div>
-                  <span className="text-gray-300 hidden sm:inline">&bull;</span>
-                  <div className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5" /> Fully Insured</div>
-                </div>
               </div>
 
               {successDetails && (
@@ -705,6 +696,46 @@ function App() {
           </div>
         </div>
       </footer>
+
+      <div className="fixed bottom-5 right-5 z-[90] flex flex-col items-center gap-3">
+        <div className={`flex flex-col items-center gap-3 transition-all duration-300 ${chatOpen ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-3 opacity-0'}`}>
+          <a href="#" aria-label="Open Facebook" className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white text-[#1877F2] shadow-soft ring-1 ring-gray-100 transition-all duration-300 hover:-translate-y-1">
+            <svg className="h-7 w-7" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.414c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97H15.83c-1.49 0-1.955.93-1.955 1.884v2.266h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z" />
+            </svg>
+          </a>
+          <a href="https://instagram.com/executiveprocleaner" target="_blank" rel="noreferrer" aria-label="Open Instagram" className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-soft ring-1 ring-gray-100 transition-all duration-300 hover:-translate-y-1">
+            <svg className="h-7 w-7" viewBox="0 0 24 24" aria-hidden="true">
+              <defs>
+                <linearGradient id="instagramGradient" x1="3" y1="21" x2="21" y2="3" gradientUnits="userSpaceOnUse">
+                  <stop stopColor="#F58529" />
+                  <stop offset="0.35" stopColor="#DD2A7B" />
+                  <stop offset="0.7" stopColor="#8134AF" />
+                  <stop offset="1" stopColor="#515BD4" />
+                </linearGradient>
+              </defs>
+              <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="url(#instagramGradient)" strokeWidth="2" />
+              <circle cx="12" cy="12" r="4" fill="none" stroke="url(#instagramGradient)" strokeWidth="2" />
+              <circle cx="17.5" cy="6.5" r="1.4" fill="url(#instagramGradient)" />
+            </svg>
+          </a>
+          <a href="https://wa.me/27682975554?text=Hi%20Executive%20Pro%20Cleaner%2C%20I%27d%20like%20to%20chat%20about%20a%20cleaning%20service." target="_blank" rel="noreferrer" aria-label="Open WhatsApp chat" className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white text-[#25D366] shadow-soft ring-1 ring-gray-100 transition-all duration-300 hover:-translate-y-1">
+            <svg className="h-7 w-7" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M20.52 3.48A11.86 11.86 0 0 0 12.07 0C5.5 0 .16 5.34.16 11.91c0 2.1.55 4.15 1.6 5.96L0 24l6.3-1.65a11.9 11.9 0 0 0 5.77 1.47h.01c6.56 0 11.91-5.34 11.91-11.91 0-3.18-1.24-6.17-3.47-8.43zM12.08 21.8h-.01a9.88 9.88 0 0 1-5.03-1.38l-.36-.22-3.74.98 1-3.64-.24-.37a9.82 9.82 0 0 1-1.51-5.25c0-5.45 4.44-9.89 9.9-9.89a9.83 9.83 0 0 1 6.99 2.9 9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.89 9.88zm5.42-7.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47a8.9 8.9 0 0 1-1.64-2.04c-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.48.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35z" />
+            </svg>
+          </a>
+        </div>
+
+        <button
+          type="button"
+          aria-label="Toggle live chat options"
+          aria-expanded={chatOpen}
+          onClick={() => setChatOpen((prev) => !prev)}
+          className="inline-flex h-16 w-16 items-center justify-center text-brand-green transition-all duration-300 hover:-translate-y-1 hover:text-brand-darkGreen"
+        >
+          <MessageCircle className="h-12 w-12 fill-current" />
+        </button>
+      </div>
 
       <div className={`fixed inset-0 z-[100] ${isMediaOpen ? 'flex' : 'hidden'} bg-black/95 backdrop-blur-md transition-opacity duration-300 items-center justify-center p-4 sm:p-8`} onClick={() => setIsMediaOpen(false)}>
         <button type="button" className="absolute top-6 right-6 text-white/60 hover:text-white transition-colors bg-white/10 hover:bg-white/20 p-3 rounded-full backdrop-blur-sm z-50" onClick={() => setIsMediaOpen(false)}>
