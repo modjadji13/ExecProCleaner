@@ -26,6 +26,7 @@ import {
   Sofa,
   Square,
   X,
+ Mail
 } from 'lucide-react'
 
 const initialForm = {
@@ -38,8 +39,8 @@ const initialForm = {
 }
 
 const mediaImages = Array.from({ length: 21 }, (_, i) => `/media/job-${String(i + 1).padStart(2, '0')}.jpg`)
-const mediaPanelClass = 'relative w-full aspect-video md:aspect-auto md:w-[668px] md:h-[683px] md:max-w-full md:mt-10 lg:mt-14 md:justify-self-end overflow-hidden bg-gray-100'
-const aboutMediaPanelClass = 'reveal active relative w-full aspect-video md:aspect-auto md:w-[668px] md:h-[506px] md:max-w-full md:mt-0 md:justify-self-end overflow-hidden bg-gray-100'
+const mediaPanelClass = 'relative w-full h-[calc((100svh-5.5rem-0.5rem)/2)] md:h-[683px] md:w-[668px] md:max-w-full md:mt-10 lg:mt-14 md:justify-self-end overflow-hidden bg-gray-100 scroll-mt-[5.5rem]'
+const aboutMediaPanelClass = 'reveal active relative w-full h-[360px] md:h-[506px] md:w-[668px] md:max-w-full md:mt-0 md:justify-self-end overflow-hidden bg-gray-100'
 const showcaseMedia = [
   ...Array.from({ length: 16 }, (_, i) => ({
     type: 'image',
@@ -174,10 +175,22 @@ function App() {
   const [activeShowcaseIndex, setActiveShowcaseIndex] = useState(0)
   const [isMediaOpen, setIsMediaOpen] = useState(false)
   const [chatOpen, setChatOpen] = useState(false)
+  const [popiaAccepted, setPopiaAccepted] = useState(false)
+  const [popiaReady, setPopiaReady] = useState(false)
   const [mapSrc, setMapSrc] = useState(defaultMapSrc)
   const hideSuccessTimer = useRef(null)
   const touchStartX = useRef(null)
   const touchCurrentX = useRef(null)
+
+  useEffect(() => {
+    setPopiaAccepted(localStorage.getItem('execpro-popia-consent-v2') === 'accepted')
+    setPopiaReady(true)
+  }, [])
+
+  const acceptPopiaNotice = () => {
+    localStorage.setItem('execpro-popia-consent-v2', 'accepted')
+    setPopiaAccepted(true)
+  }
 
   useEffect(() => {
     const revealElements = document.querySelectorAll('.reveal')
@@ -397,7 +410,7 @@ function App() {
     <div className="font-sans text-brand-black bg-white antialiased flex flex-col min-h-screen relative">
       <div className="fixed inset-0 bg-dots z-[-1] pointer-events-none opacity-60" />
 
-      <nav className="fixed w-full z-50 transition-all duration-300 bg-white/80 backdrop-blur-md border-b border-gray-100">
+      <nav className="fixed w-full z-50 transition-all duration-300 bg-white border-b border-gray-100">
         <div className="w-full px-4 sm:px-8 lg:px-14">
           <div className="flex justify-between items-center py-4 min-h-[4.5rem]">
             <a href="#" className="flex items-center gap-3 shrink-0 group smooth-hover hover:opacity-80 md:ml-8 lg:ml-24 xl:ml-[14vw]" onClick={onAnchorClick('#')}>
@@ -406,7 +419,7 @@ function App() {
               </div>
               <div className="flex flex-col justify-center">
                 <h1 className="font-heading font-black text-xl md:text-2xl leading-none tracking-tighter text-brand-black uppercase">Executive</h1>
-                <h2 className="font-heading font-bold text-xs md:text-xs leading-none tracking-widest text-brand-black uppercase -mt-1">Pro Cleaner</h2>
+                <h2 className="font-heading font-bold text-xs md:text-xs leading-none tracking-widest text-brand-green uppercase mt-0.5">Pro Cleaner</h2>
               </div>
             </a>
 
@@ -417,20 +430,32 @@ function App() {
             </div>
 
             <div className="md:hidden flex items-center">
-              <button className="text-brand-black hover:text-brand-green focus:outline-none p-2" onClick={() => setMobileOpen((prev) => !prev)}>
+              <button className="text-brand-black hover:text-brand-green focus:outline-none p-2" onClick={() => setMobileOpen(true)} aria-label="Open navigation menu">
                 <Menu className="w-6 h-6" />
               </button>
             </div>
           </div>
         </div>
 
-        <div className={`${mobileOpen ? 'block' : 'hidden'} md:hidden bg-white border-b border-gray-100 absolute w-full shadow-2xl z-40`}>
-          <div className="px-6 pt-4 pb-8 space-y-4 flex flex-col">
-            <a href="#about" className="mobile-link block font-bold text-lg text-brand-black hover:text-brand-green transition-colors" onClick={onAnchorClick('#about')}>About Us</a>
-            <a href="#pricing" className="mobile-link block font-bold text-lg text-brand-black hover:text-brand-green transition-colors" onClick={onAnchorClick('#pricing')}>Our Services</a>
-            <a href="#contact" className="mobile-link block font-bold text-lg text-brand-black hover:text-brand-green transition-colors" onClick={onAnchorClick('#contact')}>Book a Service</a>
-            <a href="#contact" className="mobile-link mt-4 w-full bg-brand-green text-white px-4 py-4 rounded-xl font-bold text-center flex justify-center items-center gap-2 group" onClick={onAnchorClick('#contact')}>Book Now <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" /></a>
-          </div>
+        <div className={`md:hidden fixed inset-0 z-40 transition-opacity duration-300 ${mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+          <button type="button" aria-label="Close navigation menu" className="absolute inset-0 bg-brand-black/40" onClick={() => setMobileOpen(false)} />
+          <aside className={`absolute right-0 top-0 flex h-dvh w-1/2 flex-col bg-white shadow-2xl transition-transform duration-300 ${mobileOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+            <div className="relative flex items-center justify-center px-6 py-5">
+              <img src="/exec_logo.png" alt="Executive Pro Cleaner logo" className="h-14 w-14 object-contain" width="56" height="56" loading="lazy" decoding="async" />
+              <button type="button" className="absolute right-6 flex h-10 w-10 items-center justify-center rounded-full text-brand-black hover:bg-gray-50 hover:text-brand-green transition-colors" onClick={() => setMobileOpen(false)} aria-label="Close navigation menu">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="rounded-ui-font flex flex-1 flex-col px-6 py-8">
+              <div className="space-y-1">
+                <a href="#about" className="block py-5 text-xl font-bold normal-case tracking-normal text-brand-black hover:text-brand-green transition-colors" onClick={onAnchorClick('#about')}>About</a>
+                <a href="#gallery" className="block py-5 text-xl font-bold normal-case tracking-normal text-brand-black hover:text-brand-green transition-colors" onClick={onAnchorClick('#gallery')}>Gallery</a>
+                <a href="#pricing" className="block py-5 text-xl font-bold normal-case tracking-normal text-brand-black hover:text-brand-green transition-colors" onClick={onAnchorClick('#pricing')}>Services</a>
+              </div>
+              <a href="#contact" className="mt-auto inline-flex min-h-[58px] items-center justify-center rounded-xl bg-brand-black px-6 py-4 text-lg font-bold tracking-normal text-white transition-colors hover:bg-brand-green" onClick={onAnchorClick('#contact')}>Book Now</a>
+            </div>
+          </aside>
         </div>
       </nav>
 
@@ -464,7 +489,7 @@ function App() {
               </div>
             </div>
 
-            <div className={mediaPanelClass}>
+            <div id="gallery" className={mediaPanelClass}>
               <img
                 src={mediaImages[activeMediaIndex % 2 === 0 ? activeMediaIndex : (activeMediaIndex - 1 + mediaImages.length) % mediaImages.length]}
                 alt="Executive Pro Cleaner portfolio"
@@ -479,30 +504,61 @@ function App() {
                 loading="lazy"
                 decoding="async"
               />
+              <div className="absolute left-4 bottom-4 z-10 rounded-full bg-white/90 px-4 py-2 text-xs font-black uppercase tracking-widest text-brand-black shadow-sm md:hidden">
+                Residential Work
+              </div>
+              </div>
+              <div className="relative -mt-6 w-full h-[calc((100svh-5.5rem-0.5rem)/2)] overflow-hidden bg-gray-100 md:hidden">
+                {showcaseMedia.map((item, index) => (
+                  item.type === 'video' ? (
+                    <video
+                      key={`mobile-gallery-${item.src}`}
+                      src={item.src}
+                      className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-1000 ease-in-out ${index === activeShowcaseIndex ? 'opacity-100' : 'opacity-0'}`}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                    />
+                  ) : (
+                    <img
+                      key={`mobile-gallery-${item.src}`}
+                      src={item.src}
+                      alt={`Executive Pro Cleaner showcase ${index + 1}`}
+                      className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-1000 ease-in-out ${index === activeShowcaseIndex ? 'opacity-100' : 'opacity-0'}`}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  )
+                ))}
+                <div className="absolute left-4 bottom-4 z-10 rounded-full bg-white/90 px-4 py-2 text-xs font-black uppercase tracking-widest text-brand-black shadow-sm">
+                  Commercial Work
+                </div>
               </div>
           </div>
         </section>
 
-        <section id="about" className="scroll-mt-[5.5rem] min-h-[calc(100vh-5.5rem)] flex items-start pt-28 pb-16 lg:pt-32 lg:pb-24 relative z-10 bg-gray-50 border-t border-gray-100">
+        <section id="about" className="scroll-mt-[5.5rem] md:min-h-[calc(100vh-5.5rem)] flex items-start pt-8 pb-8 md:pt-28 md:pb-16 lg:pt-32 lg:pb-24 relative z-10 bg-gray-50 border-t border-gray-100">
           <div className="max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-16">
-            <div className="grid md:grid-cols-[52%_48%] gap-8 lg:gap-14 items-start">
+            <div className="grid md:grid-cols-[52%_48%] gap-5 md:gap-8 lg:gap-14 items-start">
               <div className="reveal active">
-                <p className="rounded-ui-font text-brand-green font-black text-sm uppercase tracking-[0.28em] mb-4">About</p>
-                <h2 className="font-heading font-black text-5xl md:text-6xl lg:text-7xl text-brand-black tracking-tighter uppercase leading-[0.95]">
+                <p className="rounded-ui-font text-brand-green font-black text-xs md:text-sm uppercase tracking-[0.28em] mb-3 md:mb-4">About</p>
+                <h2 className="font-heading font-black text-4xl md:text-6xl lg:text-7xl text-brand-black tracking-tighter uppercase leading-[0.95]">
                   Company <span className="text-brand-green">Overview</span>
                 </h2>
-                <p className="rounded-ui-font text-brand-black text-xl md:text-2xl leading-relaxed mt-8 font-semibold max-w-4xl">
+                <p className="rounded-ui-font text-brand-black text-base md:text-2xl leading-relaxed mt-5 md:mt-8 font-semibold max-w-4xl">
                   Established in 2023 and founded by Kagiso Mokope Ngwepe in Pretoria, Executive Pro Cleaner delivers reliable residential and commercial cleaning at highly competitive prices. We utilize professional-grade equipment and eco-aware products to ensure a pristine, safe environment. We are proud to have provided our services to notable clients and projects, including Bed World Factory, Christ Embassy, and Hatfield Toyota.
                 </p>
-                <div className="rounded-ui-font mt-7 flex flex-col sm:flex-row sm:items-center gap-4">
+                <div className="rounded-ui-font mt-5 md:mt-7 flex flex-col sm:flex-row sm:items-center gap-3 md:gap-4">
                   <div className="flex -space-x-3">
                     {clientLogos.map((client) => (
-                      <div key={client.name} className={`relative w-12 h-12 rounded-full border-2 border-gray-50 shadow-sm flex items-center justify-center overflow-hidden ring-1 ring-gray-200 ${client.className ?? 'bg-white text-brand-black'}`} title={client.name}>
+                      <div key={client.name} className={`relative w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-gray-50 shadow-sm flex items-center justify-center overflow-hidden ring-1 ring-gray-200 ${client.className ?? 'bg-white text-brand-black'}`} title={client.name}>
                         <span className="absolute inset-0 flex items-center justify-center font-black text-sm">{client.initials}</span>
                         <img src={client.logo} alt={`${client.name} logo`} className="relative z-10 w-6 h-6 object-contain" loading="lazy" decoding="async" />
                       </div>
                     ))}
-                    <div className="w-12 h-12 rounded-full bg-brand-green border-2 border-gray-50 shadow-sm flex items-center justify-center text-white font-black text-sm ring-1 ring-brand-green/20">
+                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-brand-green border-2 border-gray-50 shadow-sm flex items-center justify-center text-white font-black text-sm ring-1 ring-brand-green/20">
                       +
                     </div>
                   </div>
@@ -588,64 +644,64 @@ function App() {
           </div>
         </section>
 
-        <section id="contact" className="rounded-ui-font py-8 lg:py-10 bg-gray-50 relative">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 reveal active">
+        <section id="contact" className="rounded-ui-font scroll-mt-[5.5rem] flex items-start py-4 md:py-8 lg:py-10 bg-gray-50 relative">
+          <div className="max-w-4xl mx-auto px-3 sm:px-6 lg:px-8 relative z-10 reveal active">
             <form onSubmit={handleSubmit}>
-              <div className="grid md:grid-cols-2 gap-x-8 gap-y-5">
+              <div className="grid grid-cols-2 gap-x-3 gap-y-3.5 md:gap-x-8 md:gap-y-5">
                 <div>
-                  <label htmlFor="name" className="font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Full Name <span className="text-brand-green">*</span></label>
-                  <input id="name" type="text" value={formData.name} onChange={handleInput} className="w-full h-14 rounded-xl border border-gray-200 bg-gray-50 px-5 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors" placeholder="e.g. Kagiso Mokope" required />
+                  <label htmlFor="name" className="font-black text-brand-black uppercase text-[11px] md:text-sm tracking-tight block mb-1 md:mb-2">Full Name <span className="text-brand-green">*</span></label>
+                  <input id="name" type="text" value={formData.name} onChange={handleInput} className="w-full h-[54px] md:h-14 rounded-lg md:rounded-xl border border-gray-200 bg-gray-50 px-3 md:px-5 text-sm md:text-base text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors" placeholder="e.g. Kagiso Mokope" required />
                 </div>
 
                 <div>
-                  <label htmlFor="phone" className="font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Phone Number <span className="text-brand-green">*</span></label>
-                  <input id="phone" type="tel" value={formData.phone} onChange={handleInput} className="w-full h-14 rounded-xl border border-gray-200 bg-gray-50 px-5 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors" placeholder="e.g. 082 123 4567" required />
+                  <label htmlFor="phone" className="font-black text-brand-black uppercase text-[11px] md:text-sm tracking-tight block mb-1 md:mb-2">Phone Number <span className="text-brand-green">*</span></label>
+                  <input id="phone" type="tel" value={formData.phone} onChange={handleInput} className="w-full h-[54px] md:h-14 rounded-lg md:rounded-xl border border-gray-200 bg-gray-50 px-3 md:px-5 text-sm md:text-base text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors" placeholder="e.g. 082 123 4567" required />
                 </div>
 
-                <div className="md:col-span-2">
-                  <label htmlFor="service" className="font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Service Required <span className="text-brand-green">*</span></label>
+                <div className="col-span-2">
+                  <label htmlFor="service" className="font-black text-brand-black uppercase text-[11px] md:text-sm tracking-tight block mb-1 md:mb-2">Service Required <span className="text-brand-green">*</span></label>
                   <div className="relative">
-                    <select id="service" value={formData.service} onChange={handleInput} className="w-full h-14 rounded-xl border border-gray-200 bg-gray-50 px-5 pr-12 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors appearance-none cursor-pointer" required>
+                    <select id="service" value={formData.service} onChange={handleInput} className="w-full h-[54px] md:h-14 rounded-lg md:rounded-xl border border-gray-200 bg-gray-50 px-3 md:px-5 pr-10 md:pr-12 text-sm md:text-base text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors appearance-none cursor-pointer" required>
                       {servicePills.map((pill) => <option key={pill.label} value={pill.label}>{pill.label}</option>)}
                     </select>
-                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-black pointer-events-none" />
+                    <ChevronDown className="absolute right-3 md:right-4 top-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-brand-black pointer-events-none" />
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="date" className="font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Preferred Date <span className="text-brand-green">*</span></label>
-                  <input id="date" type="date" value={formData.date} onChange={handleInput} min={new Date().toISOString().split('T')[0]} className="w-full h-14 rounded-xl border border-gray-200 bg-gray-50 px-5 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors" required />
+                  <label htmlFor="date" className="font-black text-brand-black uppercase text-[11px] md:text-sm tracking-tight block mb-1 md:mb-2">Preferred Date <span className="text-brand-green">*</span></label>
+                  <input id="date" type="date" value={formData.date} onChange={handleInput} min={new Date().toISOString().split('T')[0]} className="w-full h-[54px] md:h-14 rounded-lg md:rounded-xl border border-gray-200 bg-gray-50 px-3 md:px-5 text-sm md:text-base text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors" required />
                 </div>
 
                 <div>
-                  <label htmlFor="time" className="font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Time Slot <span className="text-brand-green">*</span></label>
+                  <label htmlFor="time" className="font-black text-brand-black uppercase text-[11px] md:text-sm tracking-tight block mb-1 md:mb-2">Time Slot <span className="text-brand-green">*</span></label>
                   <div className="relative">
-                    <select id="time" value={formData.time} onChange={handleInput} className="w-full h-14 rounded-xl border border-gray-200 bg-gray-50 px-5 pr-12 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors appearance-none cursor-pointer" required>
+                    <select id="time" value={formData.time} onChange={handleInput} className="w-full h-[54px] md:h-14 rounded-lg md:rounded-xl border border-gray-200 bg-gray-50 px-3 md:px-5 pr-10 md:pr-12 text-sm md:text-base text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors appearance-none cursor-pointer" required>
                       <option value="" disabled>Choose a slot...</option>
                       {timeSlots.map((slot) => <option key={slot} value={slot}>{slot}</option>)}
                     </select>
-                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-black pointer-events-none" />
+                    <ChevronDown className="absolute right-3 md:right-4 top-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-brand-black pointer-events-none" />
                   </div>
                 </div>
 
-                <div className="md:col-span-2">
-                  <label htmlFor="address" className="font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Full Address <span className="text-brand-green">*</span></label>
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <input id="address" type="text" value={formData.address} onChange={handleInput} className="w-full h-14 rounded-xl border border-gray-200 bg-gray-50 px-5 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors" placeholder="e.g. Silverton, Pretoria" required />
-                    <button type="button" onClick={handleFindMe} className={`h-14 sm:w-48 px-5 rounded-xl font-black uppercase text-sm tracking-tight flex items-center justify-center gap-2 transition-colors ${findMeState === 'success' ? 'bg-brand-green text-white' : 'bg-brand-black text-white hover:bg-brand-green'}`}>
-                      <Navigation className="w-4 h-4" /> {findMeState === 'success' ? 'Located' : 'Auto-Locate'}
+                <div className="col-span-2">
+                  <label htmlFor="address" className="font-black text-brand-black uppercase text-[11px] md:text-sm tracking-tight block mb-1 md:mb-2">Full Address <span className="text-brand-green">*</span></label>
+                  <div className="flex flex-row gap-2 sm:gap-3">
+                    <input id="address" type="text" value={formData.address} onChange={handleInput} className="min-w-0 flex-1 h-[54px] md:h-14 rounded-lg md:rounded-xl border border-gray-200 bg-gray-50 px-3 sm:px-5 text-sm md:text-base text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors" placeholder="e.g. Silverton, Pretoria" required />
+                    <button type="button" onClick={handleFindMe} className={`h-[54px] md:h-14 w-20 min-[390px]:w-28 sm:w-48 px-2 sm:px-5 rounded-lg md:rounded-xl font-black uppercase text-[10px] sm:text-sm tracking-tight flex items-center justify-center gap-1 sm:gap-2 transition-colors ${findMeState === 'success' ? 'bg-brand-green text-white' : 'bg-brand-black text-white hover:bg-brand-green'}`}>
+                      <Navigation className="w-4 h-4 shrink-0" /> <span className="hidden min-[390px]:inline">{findMeState === 'success' ? 'Located' : 'Auto-Locate'}</span><span className="min-[390px]:hidden">{findMeState === 'success' ? 'Set' : 'Locate'}</span>
                     </button>
                   </div>
                 </div>
 
-                <div className="md:col-span-2">
-                  <label htmlFor="details" className="font-black text-brand-black uppercase text-sm tracking-tight block mb-2">Additional Details</label>
-                  <textarea id="details" className="w-full min-h-24 rounded-xl border border-gray-200 bg-gray-50 px-5 py-4 text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors resize-y" placeholder="Any specific requirements or questions?" />
+                <div className="col-span-2">
+                  <label htmlFor="details" className="font-black text-brand-black uppercase text-[11px] md:text-sm tracking-tight block mb-1 md:mb-2">Additional Details</label>
+                  <textarea id="details" className="w-full min-h-[96px] md:min-h-24 rounded-lg md:rounded-xl border border-gray-200 bg-gray-50 px-3 md:px-5 py-3 md:py-4 text-sm md:text-base text-brand-black font-semibold outline-none focus:border-brand-green focus:bg-white transition-colors resize-y" placeholder="Any specific requirements or questions?" />
                 </div>
               </div>
 
-              <div className="pt-6 flex flex-col items-center">
-                <button type="submit" disabled={submitState === 'loading'} className="w-full rounded-xl bg-brand-black text-white font-black text-lg tracking-widest uppercase py-5 hover:bg-brand-green transition-all duration-300 flex justify-center items-center gap-2 group disabled:opacity-80 disabled:cursor-not-allowed">
+              <div className="pt-4 md:pt-6 flex flex-col items-center">
+                <button type="submit" disabled={submitState === 'loading'} className="w-full rounded-lg md:rounded-xl bg-brand-black text-white font-black text-sm md:text-lg tracking-widest uppercase py-4 md:py-5 hover:bg-brand-green transition-all duration-300 flex justify-center items-center gap-2 group disabled:opacity-80 disabled:cursor-not-allowed">
                   <span>{submitState === 'loading' ? 'Processing...' : 'Confirm Booking Request'}</span>
                   {submitState === 'loading' ? <Loader className="w-4 h-4 animate-spin" /> : <CheckCircle className="w-4 h-4 group-hover:scale-110 transition-transform" />}
                 </button>
@@ -681,14 +737,15 @@ function App() {
             </div>
           </div>
 
-          <div className="flex items-center gap-8 my-2 md:my-0">
-            <a href="https://instagram.com/executiveprocleaner" target="_blank" rel="noreferrer" aria-label="Instagram" className="text-gray-500 hover:text-brand-green transition-colors duration-300"><Instagram className="w-5 h-5" /></a>
-            <a href="#" aria-label="Facebook" className="text-gray-500 hover:text-brand-green transition-colors duration-300"><Facebook className="w-5 h-5" /></a>
-            <a href="#" aria-label="TikTok" className="text-gray-500 hover:text-brand-green transition-colors duration-300">
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
-              </svg>
-            </a>
+         <div className="flex flex-col items-center gap-2 my-2 md:my-0">
+             <a href="mailto:info@executiveprocleaner.co.za" className="flex items-center gap-2 text-xs text-gray-500 hover:text-brand-green transition-colors duration-300">
+                <Mail className="w-4 h-4" />
+                <span className="tracking-wide">info@executiveprocleaner.co.za</span>
+             </a>
+              <div className="flex items-center gap-2 text-xs text-gray-500">
+                  <MapPin className="w-4 h-4" />
+                  <span className="tracking-wide">Silverton, Pretoria</span>
+              </div>
           </div>
 
           <div className="flex flex-col items-center md:items-end">
@@ -697,7 +754,7 @@ function App() {
         </div>
       </footer>
 
-      <div className="fixed bottom-5 right-5 z-[90] flex flex-col items-center gap-3">
+      <div className="fixed bottom-36 right-5 z-[90] flex flex-col items-center gap-3">
         <div className={`flex flex-col items-center gap-3 transition-all duration-300 ${chatOpen ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-3 opacity-0'}`}>
           <a href="#" aria-label="Open Facebook" className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white text-[#1877F2] shadow-soft ring-1 ring-gray-100 transition-all duration-300 hover:-translate-y-1">
             <svg className="h-7 w-7" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -731,11 +788,32 @@ function App() {
           aria-label="Toggle live chat options"
           aria-expanded={chatOpen}
           onClick={() => setChatOpen((prev) => !prev)}
-          className="inline-flex h-16 w-16 items-center justify-center text-brand-green transition-all duration-300 hover:-translate-y-1 hover:text-brand-darkGreen"
+          className="inline-flex h-[4.5rem] w-[4.5rem] items-center justify-center text-brand-green transition-all duration-300 hover:-translate-y-1 hover:text-brand-darkGreen"
         >
-          <MessageCircle className="h-12 w-12 fill-current" />
+          <MessageCircle className="h-14 w-14 fill-current" />
         </button>
       </div>
+
+      {popiaReady && !popiaAccepted && (
+        <div className="fixed inset-0 z-[95] flex items-center justify-center bg-brand-black/30 p-4">
+          <div className="rounded-ui-font w-full max-w-xl rounded-2xl border border-gray-200 bg-white p-5 shadow-2xl">
+            <div>
+              <p className="text-sm font-black uppercase tracking-widest text-brand-black">POPIA Privacy Notice</p>
+              <p className="mt-2 text-sm font-medium leading-relaxed text-gray-600">
+                We collect your name, phone number, address, service details, and optional location only to respond to enquiries, prepare quotes, and manage cleaning bookings.
+              </p>
+            </div>
+            <div className="mt-5 flex flex-col gap-2 sm:flex-row">
+              <a href="mailto:info@executiveprocleaner.co.za?subject=POPIA%20Privacy%20Request" className="inline-flex min-h-11 flex-1 items-center justify-center rounded-xl border border-gray-200 px-5 text-sm font-bold text-brand-black transition-colors hover:border-brand-green hover:text-brand-green">
+                Privacy Request
+              </a>
+              <button type="button" onClick={acceptPopiaNotice} className="inline-flex min-h-11 flex-1 items-center justify-center rounded-xl bg-brand-black px-5 text-sm font-bold text-white transition-colors hover:bg-brand-green">
+                Accept
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className={`fixed inset-0 z-[100] ${isMediaOpen ? 'flex' : 'hidden'} bg-black/95 backdrop-blur-md transition-opacity duration-300 items-center justify-center p-4 sm:p-8`} onClick={() => setIsMediaOpen(false)}>
         <button type="button" className="absolute top-6 right-6 text-white/60 hover:text-white transition-colors bg-white/10 hover:bg-white/20 p-3 rounded-full backdrop-blur-sm z-50" onClick={() => setIsMediaOpen(false)}>
