@@ -28,6 +28,7 @@ import {
   X,
  Mail
 } from 'lucide-react'
+import { Analytics } from '@vercel/analytics/react'
 
 const initialForm = {
   name: '',
@@ -834,6 +835,7 @@ function App() {
           </div>
         </div>
       </div>
+      <Analytics />
     </div>
   )
 }
