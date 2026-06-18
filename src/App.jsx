@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 import {
   AlertCircle,
   AppWindow,
@@ -834,6 +835,7 @@ function App() {
           </div>
         </div>
       </div>
+      <Analytics />
     </div>
   )
 }
