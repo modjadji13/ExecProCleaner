@@ -756,12 +756,12 @@ function App() {
 
       <div className="fixed bottom-36 right-5 z-[90] flex flex-col items-center gap-3">
         <div className={`flex flex-col items-center gap-3 transition-all duration-300 ${chatOpen ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-3 opacity-0'}`}>
-          <a href="#" aria-label="Open Facebook" className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white text-[#1877F2] shadow-soft ring-1 ring-gray-100 transition-all duration-300 hover:-translate-y-1">
+          <a href="https://www.facebook.com/profile.php?id=61563479413723" target="_blank" rel="noreferrer" aria-label="Open Facebook" className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white text-[#1877F2] shadow-soft ring-1 ring-gray-100 transition-all duration-300 hover:-translate-y-1">
             <svg className="h-7 w-7" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.414c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97H15.83c-1.49 0-1.955.93-1.955 1.884v2.266h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z" />
             </svg>
           </a>
-          <a href="https://instagram.com/executiveprocleaner" target="_blank" rel="noreferrer" aria-label="Open Instagram" className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-soft ring-1 ring-gray-100 transition-all duration-300 hover:-translate-y-1">
+          <a href="https://www.instagram.com/executiveprocleaner/" target="_blank" rel="noreferrer" aria-label="Open Instagram" className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-soft ring-1 ring-gray-100 transition-all duration-300 hover:-translate-y-1">
             <svg className="h-7 w-7" viewBox="0 0 24 24" aria-hidden="true">
               <defs>
                 <linearGradient id="instagramGradient" x1="3" y1="21" x2="21" y2="3" gradientUnits="userSpaceOnUse">
